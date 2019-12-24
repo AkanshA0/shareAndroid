@@ -1,1 +1,0 @@
-# AR-dynamic-obj-
