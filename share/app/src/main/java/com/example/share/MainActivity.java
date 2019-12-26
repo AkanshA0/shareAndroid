@@ -65,10 +65,29 @@ public class MainActivity extends AppCompatActivity {
 */
 
         Toast.makeText(getApplicationContext()," before load ",Toast.LENGTH_SHORT);
-        String url = "https://scontent.xx.fbcdn.net/v/t1.0-0/p180x540/32509945_441963812897514_7806625513186787328_o.jpg?_nc_cat=102&_nc_ohc=pSlopmVwnPwAQkqUnMr5YF7QKYDwgRsBJqYHMkulTka3qVJ1YXyzdeUYg&_nc_ht=scontent.xx&oh=f8186be7800e56fc4021aa350f8c0ad4&oe=5EA33BAA";
+       // String url = "https://scontent.xx.fbcdn.net/v/t1.0-0/p180x540/32509945_441963812897514_7806625513186787328_o.jpg?_nc_cat=102&_nc_ohc=pSlopmVwnPwAQkqUnMr5YF7QKYDwgRsBJqYHMkulTka3qVJ1YXyzdeUYg&_nc_ht=scontent.xx&oh=f8186be7800e56fc4021aa350f8c0ad4&oe=5EA33BAA";
+       String url="https://scontent.xx.fbcdn.net/v/t1.0-9/29684065_422846671475895_60612627247842958_n.jpg?_nc_cat=109&_nc_ohc=chpSwP3774QAQmtxFwK7Rl2Ds_49Sf1jR62ZRKEWG8ZvBouN4dVCdWuVA&_nc_ht=scontent.xx&oh=4dc8e896d348b8699ae2dd94f8741c2c&oe=5EB37557";
         //new ImageLoadTask(url, imgView1).execute();
         Picasso.get().load(url).into(imageView1);
         Toast.makeText(getApplicationContext()," after load ",Toast.LENGTH_SHORT);
+
+
+        Bitmap bitmap = getBitmapFromView(imageView1);
+        try {
+            Toast.makeText(getApplicationContext(), " in try ", Toast.LENGTH_SHORT);
+            File file = new File(this.getExternalCacheDir(), "im.png");
+            FileOutputStream fOut = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+            file.setReadable(true, false);
+            Picasso.get().load(url).into(imageView1);
+        }catch (Exception e)
+        {e.printStackTrace();}
+
+
+
+
         shareContent();
 
 
@@ -174,8 +193,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-/*    v.setDrawingCacheEnabled(true);
+/*
+    v.setDrawingCacheEnabled(true);
 
 // this is the important code :)
 // Without it the view will have a dimension of 0,0 and the bitmap will be null
@@ -187,14 +206,15 @@ v.buildDrawingCache(true);
     Bitmap b = Bitmap.createBitmap(v.getDrawingCache());
 v.setDrawingCacheEnabled(false); // clear drawing cache
 return b;
+*/
 
-
-        Bitmap b = Bitmap.createBitmap( v.getLayoutParams().width, v.getLayoutParams().height, Bitmap.Config.ARGB_8888);
+       /* Bitmap b = Bitmap.createBitmap( v.getLayoutParams().width, v.getLayoutParams().height, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
         v.layout(0, 0, v.getLayoutParams().width, v.getLayoutParams().height);
         v.draw(c);
         return b;
-*/
+        */
+
 }
 
 }
